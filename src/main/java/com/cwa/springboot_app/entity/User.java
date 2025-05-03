@@ -3,15 +3,21 @@ package com.cwa.springboot_app.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity
-@Table(name = "users")
 @Data
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
+    private String fullname;
+    private String username; // the username is the user's emal
     private String password;
-    private String role;
+
+    @Enumerated(EnumType.STRING)
+    private UserType role;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Etudiant etudiant;
 }
