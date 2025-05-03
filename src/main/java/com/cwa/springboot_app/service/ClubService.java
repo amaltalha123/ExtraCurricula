@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.cwa.springboot_app.dto.EtudiantDto;
 import com.cwa.springboot_app.entity.Club;
-import com.cwa.springboot_app.entity.Etudiant;
 import com.cwa.springboot_app.entity.Projet;
 import com.cwa.springboot_app.entity.Role;
 import com.cwa.springboot_app.entity.User;

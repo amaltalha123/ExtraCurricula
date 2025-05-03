@@ -1,10 +1,6 @@
 package com.cwa.springboot_app.command;
 
 
-
-import org.springframework.stereotype.Component;
-
-
 import com.cwa.springboot_app.entity.Club;
 import com.cwa.springboot_app.entity.Projet;
 import com.cwa.springboot_app.entity.EnumEtatProjet;
