@@ -27,10 +27,10 @@ public class ProjectOperationsImpl implements ProjectOperations{
     private final CommandInvoker invoker = new CommandInvoker();
 
     @Override
-    public boolean creerProjet(Projet projet, Club club) {
+    public boolean creerProjet(Projet projet, Club club,String strategynotif) {
         Command cmd = factory.createCreateProjectCommand(club, projet);
-        String msg="nouveau projet";
-        return invoker.executerCommande(cmd) && notificationService.notifierMembresDuBureau(club,msg);
+        String msg="nouveau projet" + projet.getNom() +"est ajouté au club" + club.getNom();
+        return invoker.executerCommande(cmd) && notificationService.notifierMembresDuBureau(club,msg,strategynotif);
     }
     @Override
     public boolean modifierProjet(Projet projet,Club club) {

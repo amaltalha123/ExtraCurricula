@@ -31,7 +31,7 @@ public class PresidentController {
     public ResponseEntity<?> CreateProject(@RequestBody CreateProjectRequest createProjectRequest){
            Map<String,Object> result = new HashMap<>();
         
-           boolean success=proxy.creerProjet(createProjectRequest.getProjet(),createProjectRequest.getClub());
+           boolean success=proxy.creerProjet(createProjectRequest.getProjet(),createProjectRequest.getClub(),createProjectRequest.getStrategy());
            if(success){
                 result.put("status", "success");
                 result.put("message", "le Projet ets ajouté avec succées");

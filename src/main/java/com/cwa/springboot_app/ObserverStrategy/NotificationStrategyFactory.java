@@ -14,8 +14,14 @@ public class NotificationStrategyFactory {
         this.mailSender = mailSender;
     }
 
-    public NotificationStrategy getStrategy() {
+    public NotificationStrategy getStrategy(String strategynotif) {
+         if(strategynotif.equals("email")){
             return new NotifierParEmail(mailSender);
+         }else if(strategynotif.equals("SMS")){
+            return new NotifierParSMS();
+         }else{
+            return new NotifierParEmail(mailSender);
+         }
       
     }
 }

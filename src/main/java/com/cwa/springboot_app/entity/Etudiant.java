@@ -18,10 +18,6 @@ public class Etudiant extends User{
    
     private String cne;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Role> rolesClub;

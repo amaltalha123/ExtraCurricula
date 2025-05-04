@@ -4,6 +4,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import com.cwa.springboot_app.dto.EtudiantDto;
 
+
 public class NotifierParEmail implements NotificationStrategy {
 
     private final JavaMailSender mailSender;

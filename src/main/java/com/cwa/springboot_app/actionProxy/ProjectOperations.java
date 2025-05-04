@@ -4,6 +4,6 @@ import com.cwa.springboot_app.entity.Club;
 import com.cwa.springboot_app.entity.Projet;
 
 public interface ProjectOperations {
-    boolean creerProjet(Projet projet,Club club);
+    boolean creerProjet(Projet projet,Club club,String strategynotif);
     boolean modifierProjet(Projet projet,Club club);
 }

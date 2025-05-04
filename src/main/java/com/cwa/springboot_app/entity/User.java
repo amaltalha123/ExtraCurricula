@@ -18,6 +18,5 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserType role;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Etudiant etudiant;
+   
 }

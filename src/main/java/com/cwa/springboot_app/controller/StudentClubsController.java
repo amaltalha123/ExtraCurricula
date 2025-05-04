@@ -81,7 +81,7 @@ public class StudentClubsController {
                 return ResponseEntity.ok(membresBureau);
         }
 
-        @PostMapping("/PredreTache")
+        @PostMapping("/PrendreTache")
         public ResponseEntity<ResponseMessage> PrendreTache( @RequestBody Tache tache){
                 if(projetctService.PredreTache(tache)){
                         return ResponseEntity.ok(new ResponseMessage("Vous avez pris la tache", true));

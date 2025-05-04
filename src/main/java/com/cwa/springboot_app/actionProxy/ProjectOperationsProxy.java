@@ -39,11 +39,11 @@ public class ProjectOperationsProxy implements ProjectOperations{
 
   
     @Override
-    public boolean creerProjet(Projet projet, Club club) {
+    public boolean creerProjet(Projet projet, Club club,String strategynotif) {
         
         if(hasGlobalRole("ETUDIANT")){
             if(hasClubRole(club, "President")){
-                return projectOperationsImpl.creerProjet(projet, club);
+                return projectOperationsImpl.creerProjet(projet, club,strategynotif);
             }else{
                 throw new InsufficientRoleException("L'utilisateur doit être président du club pour créer un projet.");
             }

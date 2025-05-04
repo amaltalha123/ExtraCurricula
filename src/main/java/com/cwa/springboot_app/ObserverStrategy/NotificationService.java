@@ -2,13 +2,14 @@ package com.cwa.springboot_app.ObserverStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.stereotype.Service;
 
 import com.cwa.springboot_app.dto.EtudiantDto;
 import com.cwa.springboot_app.entity.Club;
-import com.cwa.springboot_app.entity.RoleBureau;
 import com.cwa.springboot_app.service.ClubService;
+
 
 @Service
 public class NotificationService implements Subject{
@@ -38,23 +39,32 @@ public class NotificationService implements Subject{
         }
     }
 
-    public boolean notifierMembresDuBureau(Club club, String msg) {
-        List<EtudiantDto> membreBureau = clubService.getClubMembreBureau(club);
-        
-        if (membreBureau == null || membreBureau.isEmpty()) {
-            return false; 
-        }
+    public boolean notifierMembresDuBureau(Club club, String msg, String strategynotif) {
+    List<EtudiantDto> membreBureau = clubService.getClubMembreBureau(club);
     
-        for (EtudiantDto membre : membreBureau) {
-            NotificationStrategy strategy = strategyFactory.getStrategy();
-            Observer obs = new MembreBureauObserver(membre, strategy);
-            addObserver(obs);
-        }
-    
-        notifierObservers(msg);
-        observers.clear();
-        
-        return true; 
+    if (membreBureau == null || membreBureau.isEmpty()) {
+        return false; 
     }
+   
+    NotificationStrategy strategy = strategyFactory.getStrategy(strategynotif);
+    List<CompletableFuture<Void>> futures = new ArrayList<>();
     
+    for (EtudiantDto membre : membreBureau) {
+        Observer obs = new MembreBureauObserver(membre, strategy);
+        addObserver(obs);
+        
+        // Envoyer l'e-mail de manière asynchrone
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            obs.update(msg);
+        });
+        futures.add(future);
+    }
+
+    // Attendre que tous les e-mails soient envoyés
+    CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+    
+    observers.clear();
+    
+    return true; 
+}
 }
