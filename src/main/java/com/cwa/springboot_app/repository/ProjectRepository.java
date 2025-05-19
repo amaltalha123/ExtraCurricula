@@ -14,6 +14,7 @@ import java.util.List;
 @Repository
 public interface ProjectRepository extends JpaRepository<Projet, Long>{
 	Optional<Projet> findByNom(String nom);
+	Optional<Projet> findById(long id);
 	List<Projet> findByClub(Club club);
 
 }

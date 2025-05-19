@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cwa.springboot_app.actionProxy.ProjectOperationsProxy;
 import com.cwa.springboot_app.dto.CreateProjectRequest;
+import com.cwa.springboot_app.dto.CreateTaskRequest;
 
 
 
@@ -34,7 +35,7 @@ public class PresidentController {
            boolean success=proxy.creerProjet(createProjectRequest.getProjet(),createProjectRequest.getClub(),createProjectRequest.getStrategy());
            if(success){
                 result.put("status", "success");
-                result.put("message", "le Projet ets ajouté avec succées");
+                result.put("message", "le Projet est ajouté avec succées");
            }else{
                 result.put("status", "error");
                 result.put("message", "Une erreur est survenue lors de l'ajout du projet");
@@ -57,5 +58,37 @@ public class PresidentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
         }
     }
+
+    @PostMapping("/ChangeProjectState")
+    public ResponseEntity<?> changeProjectState(@RequestBody CreateProjectRequest request) {
+        Map<String, Object> result = new HashMap<>();
+        boolean success = proxy.changerEtat(request.getProjet(),request.getClub());
+        if (success) {
+            result.put("status", "success");
+            result.put("message", "L'etat d projet à été avancée");
+            return ResponseEntity.ok(result);
+        } else {
+            result.put("status", "error");
+            result.put("message", "Une erreur est survenue lors de la modification");
+            return ResponseEntity.ok(result);
+        }
+    }
+
+
+    @PostMapping("/CreateTask")
+    public ResponseEntity<?> CreateTask(@RequestBody CreateTaskRequest request) {
+        Map<String, Object> result = new HashMap<>();
+        boolean success = proxy.CreerTache(request.getProjet(),request.getTache());
+        if (success) {
+            result.put("status", "success");
+            result.put("message", "L'etat d projet à été avancée");
+            return ResponseEntity.ok(result);
+        } else {
+            result.put("status", "error");
+            result.put("message", "Une erreur est survenue lors de la modification");
+            return ResponseEntity.ok(result);
+        }
+    }
+
 
 }

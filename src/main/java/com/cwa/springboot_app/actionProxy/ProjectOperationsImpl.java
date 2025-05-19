@@ -7,7 +7,7 @@ import com.cwa.springboot_app.command.CommandInvoker;
 import com.cwa.springboot_app.command.Command;
 import com.cwa.springboot_app.entity.Club;
 import com.cwa.springboot_app.entity.Projet;
-
+import com.cwa.springboot_app.entity.Tache;
 import com.cwa.springboot_app.ObserverStrategy.NotificationService;
 import com.cwa.springboot_app.actionProxy.CommandFactory;
 
@@ -35,6 +35,11 @@ public class ProjectOperationsImpl implements ProjectOperations{
     @Override
     public boolean modifierProjet(Projet projet,Club club) {
         Command cmd = factory.createModifyProjectCommand(projet);
+        return invoker.executerCommande(cmd) ;
+    }
+    @Override
+    public boolean CreerTache(Projet projet, Tache tache) {
+        Command cmd = factory.CreateTaskCommand(projet,tache);
         return invoker.executerCommande(cmd) ;
     }
      

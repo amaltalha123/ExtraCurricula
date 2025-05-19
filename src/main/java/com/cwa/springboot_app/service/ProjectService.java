@@ -59,7 +59,7 @@ public class ProjectService {
         Optional<Etudiant> etudiantopt=studentService.getStudent();
         //the verification if that student is a member in the club must be added
         
-        if (etudiantopt.isPresent()) {
+        if (etudiantopt.isPresent() && tache.getPrisePar() != null) {
             Etudiant etudiant = etudiantopt.get(); 
             Optional<Tache> tacheOpt = taskRepository.findById(tache.getIdTache()); 
             

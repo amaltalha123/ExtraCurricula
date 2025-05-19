@@ -34,9 +34,14 @@ public class NotificationService implements Subject{
 
     @Override
     public void notifierObservers(String msg) {
-        for (Observer o : observers) {
-            o.update(msg);
+        List<CompletableFuture<Void>> futures = new ArrayList<>();
+        for (Observer obs : observers) {
+            CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            obs.update(msg);
+            });
+            futures.add(future);
         }
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
     }
 
     public boolean notifierMembresDuBureau(Club club, String msg, String strategynotif) {
@@ -47,21 +52,15 @@ public class NotificationService implements Subject{
     }
    
     NotificationStrategy strategy = strategyFactory.getStrategy(strategynotif);
-    List<CompletableFuture<Void>> futures = new ArrayList<>();
+    
     
     for (EtudiantDto membre : membreBureau) {
         Observer obs = new MembreBureauObserver(membre, strategy);
         addObserver(obs);
         
-        // Envoyer l'e-mail de manière asynchrone
-        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-            obs.update(msg);
-        });
-        futures.add(future);
     }
 
-    // Attendre que tous les e-mails soient envoyés
-    CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+    notifierObservers(msg);
     
     observers.clear();
     
